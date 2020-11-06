@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shuiqing.dao.SmsDao" >
+
+  <resultMap id="resultSms" type="com.shuiqing.entity.SmsVO">
+    <result property="id" column="id"/>
+    <result property="createTime" column="create_time"/>
+    <result property="rdState" column="rd_state"/>
+    <result property="token" column="token"/>
+    <result property="userName" column="user_name"/>
+    <result property="type" column="type"/>
+  </resultMap>
+  <select id="querySms" parameterType="com.shuiqing.entity.SmsVO" resultMap="resultSms">
+    select *
+    from t_sms
+    <where>
+      <if test="token != null">
+        token=#{token}
+      </if>
+      <if test="type != null">
+        and type=#{type}
+      </if>
+      <if test="token != null">
+        and rd_state=#{rdState}
+      </if>
+    </where>
+  </select>
+
+  <update id="updateSms" parameterType="com.shuiqing.entity.SmsVO">
+    update t_sms
+    <set>
+      <if test="type != null">
+        type =#{type}
+      </if>
+      where id=#{id}
+    </set>
+  </update>
+</mapper>
